@@ -21,6 +21,8 @@ export const useAuthStore = create<AuthState>()((set,get)=> ({
       return false;
     }
     // ! Save the stoken in storage
+    console.log(resp);
+    
 
     set({
       status: "authenticated",
