@@ -15,12 +15,19 @@ export const useAuthStore = create<AuthState>()((set,get)=> ({
   token: undefined,
   user: undefined,
   login: async (email: string, password: string) => {
-   const resp = await authLogin(email,password);
+    const resp = await authLogin(email, password);
     if (!resp) {
-      set({ status: 'not-authenticated' ,token:undefined,user:undefined});
+      set({ status: "not-authenticated", token: undefined, user: undefined });
       return false;
     }
+    // ! Save the stoken in storage
 
-  return false
-}
+    set({
+      status: "authenticated",
+      user: resp.user,
+      token: resp.token,
+    });
+
+    return true;
+  }
 }));
