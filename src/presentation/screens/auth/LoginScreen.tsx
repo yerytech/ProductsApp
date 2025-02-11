@@ -60,6 +60,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         {/* Botton */}
         <Layout>
           <Button
+            disabled={isPosting}
             onPress={onLogin}
             accessoryRight={
               <MyIcon
