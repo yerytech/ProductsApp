@@ -2,16 +2,17 @@ import { create } from "zustand";
 import { User } from "../../../domain/entities/user.entity";
 import { AuthStatus } from "../../../infrastructure/interfacea/auth.status";
 import { authLogin } from "../../../actions/auth/auth";
+import { StorageAdapter } from "../../../config/adapters/storage-adapter";
 
 export interface AuthState {
-token?: string;
+  token?: string;
   user?: User;
   status: AuthStatus;
-login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
 }
 
-export const useAuthStore = create<AuthState>()((set,get)=> ({
-  status: 'checking',
+export const useAuthStore = create<AuthState>()((set, get) => ({
+  status: "checking",
   token: undefined,
   user: undefined,
   login: async (email: string, password: string) => {
@@ -20,9 +21,10 @@ export const useAuthStore = create<AuthState>()((set,get)=> ({
       set({ status: "not-authenticated", token: undefined, user: undefined });
       return false;
     }
-    // ! Save the stoken in storage
-    console.log(resp);
-    
+    // ! Save the token in storage
+    await StorageAdapter.setItem("token", resp.token);
+    const storedtoken = await StorageAdapter.getItem("token");
+    console.log("storetoken", storedtoken);
 
     set({
       status: "authenticated",
@@ -31,5 +33,5 @@ export const useAuthStore = create<AuthState>()((set,get)=> ({
     });
 
     return true;
-  }
+  },
 }));
