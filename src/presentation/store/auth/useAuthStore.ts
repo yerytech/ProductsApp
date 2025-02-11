@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { User } from "../../../domain/entities/user.entity";
 import { AuthStatus } from "../../../infrastructure/interfacea/auth.status";
-import { authLogin } from "../../../actions/auth/auth";
+import { authCheckStatus, authLogin } from "../../../actions/auth/auth";
 import { StorageAdapter } from "../../../config/adapters/storage-adapter";
 
 export interface AuthState {
@@ -9,6 +9,7 @@ export interface AuthState {
   user?: User;
   status: AuthStatus;
   login: (email: string, password: string) => Promise<boolean>;
+  checkStatus: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
@@ -33,5 +34,18 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     });
 
     return true;
+  },
+  checkStatus: async () => {
+    const resp = await authCheckStatus();
+    if (!resp) {
+      set({ status: "not-authenticated", token: undefined, user: undefined });
+      return;
+    }
+    await StorageAdapter.setItem("token", resp.token);
+    set({
+      status: "authenticated",
+      user: resp.user,
+      token: resp.token,
+    });
   },
 }));

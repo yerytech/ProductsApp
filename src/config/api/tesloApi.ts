@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Platform } from "react-native";
+import { StorageAdapter } from "../adapters/storage-adapter";
 const {
   EXPO_PUBLIC_STAGE,
   EXPO_PUBLIC_API_URL,
@@ -20,9 +21,15 @@ const tesloApi = axios.create({
     "Content-Type": "application/json",
   },
 });
- 
-// ! TODO interceptors 
 
+// ! TODO interceptors
+tesloApi.interceptors.request.use(async (config) => {
+  const token = await StorageAdapter.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export {
   tesloApi,

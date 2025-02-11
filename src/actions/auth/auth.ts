@@ -19,26 +19,30 @@ const returnUserToken = (data:AuthResponse) => {
     token: data.token
   }
 }
-export const authLogin =  async( email:string, password:string) => {
-  email=email.toLowerCase();
-  
+export const authLogin = async (email: string, password: string) => {
+  email = email.toLowerCase();
+
   try {
-    const { data} = await  tesloApi.post<AuthResponse>('/auth/login', {
+    const { data } = await tesloApi.post<AuthResponse>("/auth/login", {
       email,
-      password
-    })
+      password,
+    });
 
     return returnUserToken(data);
-
-
-
-
-
-
   } catch (error) {
     console.log(error);
-    
-     return null
+
+    return null;
   }
- 
+};
+
+export const authCheckStatus = async () => {
+  try {
+    const { data } = await tesloApi.get<AuthResponse>("auth/auth/check-status");
+    return returnUserToken(data);
+  } catch (error) {
+    console.log(error);
+
+    return null;
+  }
 };
