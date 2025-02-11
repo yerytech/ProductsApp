@@ -53,7 +53,11 @@ export const authRegister = async (
   fullName: string
 ) => {
   try {
-    const { data } = await tesloApi.post<AuthResponse>("/auth/register");
+    const { data } = await tesloApi.post<AuthResponse>("/auth/register", {
+      email,
+      password,
+      fullName,
+    });
     return returnUserToken(data);
   } catch (error) {
     console.log(`Error al Registrar usuario ${error}`);
