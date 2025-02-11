@@ -69,7 +69,7 @@ export const LoginScreen = ({ navigation }: Props) => {
               />
             }
           >
-            Ingresar
+            <Text>Ingresar</Text>
           </Button>
         </Layout>
         {/* Info para crear cuenta */}

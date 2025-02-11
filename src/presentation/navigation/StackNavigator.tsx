@@ -17,18 +17,15 @@ const Stack = createStackNavigator<RootStartParams>();
 
 export const StackNavigator =()=> {
   return (
-    <Stack.Navigator  screenOptions={{
-      headerShown: false,
-      // animation:"fade"
-      animationTypeForReplace: "push",
-    
-      
-    }}
-    
-     initialRouteName="LoginScreen"
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        // animation:"fade"
+        animationTypeForReplace: "push",
+      }}
+      initialRouteName="LoadingScreen"
     >
-      <Stack.Screen 
-       
+      <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
       />
