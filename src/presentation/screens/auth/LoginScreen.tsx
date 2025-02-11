@@ -13,14 +13,15 @@ export const LoginScreen = ({ navigation }: Props) => {
     email: "",
     password: "",
   });
+  const [isPosting, setIsPosting] = useState(false);
   const { height } = useWindowDimensions();
 
   const onLogin = async () => {
     if (form.email.length === 0 || form.password.length === 0) return;
-
+    setIsPosting(true);
     const wasSuccessful = await login(form.email, form.password);
+    setIsPosting(false);
     if (wasSuccessful) return;
-
     Alert.alert("Error", "Credenciales incorrectas");
   };
 
