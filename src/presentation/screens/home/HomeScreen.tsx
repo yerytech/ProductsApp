@@ -2,6 +2,7 @@ import { Layout, Text } from "@ui-kitten/components";
 import { useAuthStore } from "../../store/auth/useAuthStore";
 import { getProdutsByPage } from "../../../actions/products/get-products-by-page";
 import { useQuery } from "@tanstack/react-query";
+import { MainLayout } from "../../layouts/MainLayout";
 
 export const HomeScreen = () => {
   const { isLoading, data: products = [] } = useQuery({
@@ -12,8 +13,11 @@ export const HomeScreen = () => {
   getProdutsByPage(1);
   const { logOut } = useAuthStore();
   return (
-    <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>{JSON.stringify(products, null, 2)}</Text>
-    </Layout>
+    <MainLayout
+      title="TesloShop - Productos"
+      subtitle="Aplicacion admin"
+    >
+      <Text>Hola</Text>
+    </MainLayout>
   );
 };
