@@ -35,20 +35,17 @@ export const MainLayout = ({ title, subtitle, rightAction, rightActionIcon, chil
 
 
  return (
-   <Layout style={{paddingTop:top,}}>
+   <Layout style={{ paddingTop: top }}>
      <TopNavigation
        title={title}
        subtitle={subtitle}
        alignment="center"
        accessoryLeft={canGoBack() ? renderBackAction : undefined}
-       accessoryRight={ ()=><RenderRightAction/>}
+       accessoryRight={() => <RenderRightAction />}
      />
-     <Divider/>
-       
-     <Layout style={{flex:1}}>
-       {children}
-     </Layout>
-   
- </Layout>
+     <Divider />
+
+     <Layout style={{ height: "90%" }}>{children}</Layout>
+   </Layout>
  );
 };
