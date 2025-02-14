@@ -1,9 +1,9 @@
-import { Layout, Text } from "@ui-kitten/components";
 import { useAuthStore } from "../../store/auth/useAuthStore";
 import { getProdutsByPage } from "../../../actions/products/get-products-by-page";
 import { useQuery } from "@tanstack/react-query";
 import { MainLayout } from "../../layouts/MainLayout";
 import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
+import { ProductList } from "../../components/products/Productslist";
 
 export const HomeScreen = () => {
   const { isLoading, data: products = [] } = useQuery({
@@ -18,7 +18,7 @@ export const HomeScreen = () => {
       title="TesloShop - Productos"
       subtitle="Aplicacion admin"
     >
-      <FullScreenLoader />
+      {isLoading ? <FullScreenLoader /> : <ProductList products={products} />}
     </MainLayout>
   );
 };
