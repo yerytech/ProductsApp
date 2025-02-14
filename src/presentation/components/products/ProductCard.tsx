@@ -29,7 +29,12 @@ export const ProductCard = ({ product }: Prop) => {
         />
       )}
 
-      <Text>{product.title}</Text>
+      <Text
+        numberOfLines={2}
+        style={{ textAlign: "center" }}
+      >
+        {product.title}
+      </Text>
     </Card>
   );
 };
