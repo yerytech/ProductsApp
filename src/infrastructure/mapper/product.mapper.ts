@@ -7,7 +7,7 @@ export class ProductMapper {
   static tesloProductToEntiTy(tesloProduct:TesloProduct):Product {
     return {
       id: tesloProduct.id,
-      title: tesloProduct.id,
+      title: tesloProduct.title,
       price: tesloProduct.price,
       description: tesloProduct.description,
       slug: tesloProduct.slug,
