@@ -9,11 +9,14 @@ import { Layout, List } from "@ui-kitten/components";
 import { ProductCard } from "./ProductCard";
 import { useState } from "react";
 import { RefreshControl } from "react-native";
+import { useQueryClient } from "@tanstack/react-query";
 export const ProductList = ({ products, fechNextPage }: Prop) => {
+  const queryClient = useQueryClient();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const onPullToRefresh = async () => {
     setIsRefreshing(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    queryClient.invalidateQueries({ queryKey: ["products", "infinite"] });
     setIsRefreshing(false);
   };
   return (
