@@ -4,12 +4,12 @@ import { Divider, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MyIcon } from "../components/ui/MyIcon";
 
-interface Props{
+interface Props {
   title: string;
   subtitle?: string;
   rightAction?: () => void;
-  rightActionIcon?: string
-  children: React.ReactNode;
+  rightActionIcon?: string;
+  children?: React.ReactNode;
 }
 export const MainLayout = ({ title, subtitle, rightAction, rightActionIcon, children }: Props) => { 
   const { top } = useSafeAreaInsets();
