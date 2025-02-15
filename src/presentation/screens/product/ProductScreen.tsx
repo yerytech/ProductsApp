@@ -22,6 +22,7 @@ import {
 import { MyIcon } from "../../components/ui/MyIcon";
 import { Formik } from "formik";
 import { updateCreateProduct } from "../../../actions/products/update-create-products";
+import { CameraAdapter } from "../../../config/adapters/camera-adapter";
 const sizes: Size[] = [Size.Xs, Size.S, Size.M, Size.L, Size.Xl, Size.Xxl];
 const gender: Gender[] = [Gender.Kid, Gender.Men, Gender.Unisex, Gender.Women];
 interface Props extends StackScreenProps<RootStartParams, "ProductScreen"> {}
@@ -57,6 +58,12 @@ export const ProductScreen = ({ route }: Props) => {
     >
       {({ handleChange, handleSubmit, values, errors, setFieldValue }) => (
         <MainLayout
+          rightAction={async () => {
+            const photos = await CameraAdapter.getImageFromGallery();
+            console.log(photos);
+            setFieldValue("images", [...values.images, ...photos]);
+          }}
+          rightActionIcon="camera-outline"
           subtitle={`Precio:${values!.price}`}
           title={values!.title}
         >
