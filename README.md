@@ -1,6 +1,6 @@
 # ProductsApp
 
-ProductsApp es una aplicación móvil desarrollada en **React Native** utilizando **Expo Bare Workflow**. Está construida con **TypeScript** y actualmente se encuentra en proceso de desarrollo.
+ProductsApp es una aplicación móvil desarrollada en **React Native** utilizando **Expo Bare Workflow**. Está construida con **TypeScript**.
 
 ## 🚀 Tecnologías Utilizadas
 
@@ -63,13 +63,6 @@ ProductsApp es una aplicación móvil desarrollada en **React Native** utilizand
 ![Screenshot 5](https://github.com/yerytech/ProductsApp/blob/main/screenshot/5.png)
 ![Screenshot 6](https://github.com/yerytech/ProductsApp/blob/main/screenshot/6.png)
 
-## 🔧 En Proceso de Desarrollo
-
-Esta app aún está en desarrollo, por lo que algunas funcionalidades podrían no estar finalizadas o sujetas a cambios.
-
-## 🤝 Contribuciones
-
-Las contribuciones son bienvenidas. Por favor, abre un issue para discutir cambios importantes antes de hacer un pull request.
 
 ## 📄 Licencia
 
