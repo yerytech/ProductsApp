@@ -62,7 +62,13 @@ export const ProductScreen = ({ route }: Props) => {
         >
           <ScrollView style={{ flex: 1 }}>
             {/* Imagen del producto */}
-            <Layout>
+            <Layout
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                marginVertical: 10,
+              }}
+            >
               {values.images.length === 0 ? (
                 <Image
                   style={{
