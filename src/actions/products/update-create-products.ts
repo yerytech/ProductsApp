@@ -12,12 +12,35 @@ export const updateCreateProduct = async (product: Partial<Product>) => {
 
   return createProduct(product);
 };
-const prepareImages = (images: string[]) => images;
+const prepareImages = async (images: string[]) => {
+  const fileImages = images.filter((image) => image.includes("file://"));
+  const currentImages = images.filter((image) => !image.includes("file://"));
+
+  if (fileImages.length > 0) {
+    const uploaPromises = fileImages.map(uploadImages);
+    const uploadedImages = await Promise.all(uploaPromises);
+    currentImages.push(...uploadedImages);
+  }
+
+  return currentImages.map((image) => image.split("/").pop()!);
+};
+const uploadImages = async (image: string) => {
+  const formdata = new FormData();
+  const blob = new Blob([image], { type: "image/jpeg" });
+  formdata.append("file", blob, image.split("/").pop());
+  const { data } = await tesloApi.post<{ image: string }>("/upload", formdata, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data.image;
+};
+
 const updateProduct = async (product: Partial<Product>) => {
   const { id, images = [], ...rest } = product;
 
   try {
-    const checkImages = prepareImages(images);
+    const checkImages = await prepareImages(images);
 
     const { data } = await tesloApi.patch(`/products/${id}`, {
       images: checkImages,
@@ -37,7 +60,7 @@ const createProduct = async (product: Partial<Product>) => {
   const { id, images = [], ...rest } = product;
 
   try {
-    const checkImages = prepareImages(images);
+    const checkImages = await prepareImages(images);
 
     const { data } = await tesloApi.post(`/products/`, {
       images: checkImages,

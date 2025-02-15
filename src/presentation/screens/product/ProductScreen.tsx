@@ -63,7 +63,7 @@ export const ProductScreen = ({ route }: Props) => {
             console.log(photos);
             setFieldValue("images", [...values.images, ...photos]);
           }}
-          rightActionIcon="camera-outline"
+          rightActionIcon="image-outline"
           subtitle={`Precio:${values!.price}`}
           title={values!.title}
         >
