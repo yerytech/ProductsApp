@@ -95,6 +95,9 @@ export const ProductScreen = ({ route }: Props) => {
             style={{ flex: 1 }}
           />
         </Layout>
+
+        {/* selectores  */}
+
         <Layout style={{ height: 150 }} />
       </ScrollView>
     </MainLayout>
