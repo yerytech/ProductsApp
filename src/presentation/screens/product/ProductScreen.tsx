@@ -1,4 +1,10 @@
-import { Input, Layout, Text } from "@ui-kitten/components";
+import {
+  Button,
+  ButtonGroup,
+  Input,
+  Layout,
+  useTheme,
+} from "@ui-kitten/components";
 import { MainLayout } from "../../layouts/MainLayout";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,12 +14,15 @@ import { getProductById } from "../../../actions/products/get-product-by-id";
 import { useRef } from "react";
 import { FlatList, ScrollView } from "react-native";
 import { FadeInImage } from "../../components/ui/FadeInImage";
-
+import { Gender, Size } from "../../../domain/entities/products.entity";
+import { MyIcon } from "../../components/ui/MyIcon";
+const sizes: Size[] = [Size.Xs, Size.S, Size.M, Size.L, Size.Xl, Size.Xxl];
+const gender: Gender[] = [Gender.Kid, Gender.Men, Gender.Unisex, Gender.Women];
 interface Props extends StackScreenProps<RootStartParams, "ProductScreen"> {}
 
 export const ProductScreen = ({ route }: Props) => {
   const productIdRef = useRef(route.params.productId);
-
+  const theme = useTheme();
   const { data: product } = useQuery({
     queryKey: ["product", productIdRef.current],
     queryFn: () => getProductById(productIdRef.current),
@@ -98,6 +107,55 @@ export const ProductScreen = ({ route }: Props) => {
 
         {/* selectores  */}
 
+        <ButtonGroup
+          style={{ margin: 2, marginTop: 30, marginHorizontal: 15 }}
+          size="small"
+          appearance="outline"
+        >
+          {sizes.map((size) => (
+            <Button
+              style={{
+                flex: 1,
+                backgroundColor: true ? "#99C1F1" : undefined,
+              }}
+              key={size}
+            >
+              {size}
+            </Button>
+          ))}
+        </ButtonGroup>
+
+        <ButtonGroup
+          style={{ margin: 2, marginTop: 30, marginHorizontal: 15 }}
+          size="small"
+          appearance="outline"
+        >
+          {gender.map((gender) => (
+            <Button
+              style={{
+                flex: 1,
+                backgroundColor: true ? "#99C1F1" : undefined,
+              }}
+              key={gender}
+            >
+              {gender}
+            </Button>
+          ))}
+        </ButtonGroup>
+        {/*Botton de Guardar  */}
+
+        <Button
+          accessoryLeft={
+            <MyIcon
+              name={"save-outline"}
+              white
+            />
+          }
+          style={{ margin: 15 }}
+          onPress={() => console.log("guardar")}
+        >
+          Guardar
+        </Button>
         <Layout style={{ height: 150 }} />
       </ScrollView>
     </MainLayout>
