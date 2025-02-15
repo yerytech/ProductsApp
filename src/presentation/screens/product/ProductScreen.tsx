@@ -12,7 +12,7 @@ import { RootStartParams } from "../../navigation/StackNavigator";
 import { StackScreenProps } from "@react-navigation/stack";
 import { getProductById } from "../../../actions/products/get-product-by-id";
 import { useRef } from "react";
-import { FlatList, ScrollView } from "react-native";
+import { FlatList, Image, ScrollView } from "react-native";
 import { FadeInImage } from "../../components/ui/FadeInImage";
 import {
   Gender,
@@ -31,7 +31,7 @@ export const ProductScreen = ({ route }: Props) => {
   const theme = useTheme();
   const queryClient = useQueryClient();
 
-  const { data: values } = useQuery({
+  const { data: produc } = useQuery({
     queryKey: ["product", productIdRef.current],
     queryFn: () => getProductById(productIdRef.current),
   });
@@ -46,13 +46,13 @@ export const ProductScreen = ({ route }: Props) => {
     },
   });
 
-  if (!values?.id) {
+  if (!produc) {
     return <MainLayout title="Cargando...." />;
   }
 
   return (
     <Formik
-      initialValues={values}
+      initialValues={produc}
       onSubmit={(values) => mutation.mutate(values)}
     >
       {({ handleChange, handleSubmit, values, errors, setFieldValue }) => (
@@ -63,29 +63,34 @@ export const ProductScreen = ({ route }: Props) => {
           <ScrollView style={{ flex: 1 }}>
             {/* Imagen del producto */}
             <Layout>
-              <FlatList
-                keyExtractor={(item) => item}
-                data={values.images}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <FadeInImage
-                    uri={item}
-                    style={{
-                      width: 300,
-                      height: 300,
-                      marginHorizontal: 8,
-                      borderRadius: 30,
-                      shadowColor: "fff",
-
-                      shadowOffset: {
-                        width: 2,
-                        height: -20,
-                      },
-                    }}
-                  />
-                )}
-              />
+              {values.images.length === 0 ? (
+                <Image
+                  style={{
+                    width: 300,
+                    height: 300,
+                    marginHorizontal: 8,
+                  }}
+                  source={require("../../../assets/no-product-image.png")}
+                />
+              ) : (
+                <FlatList
+                  keyExtractor={(item) => item}
+                  data={values.images}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={({ item }) => (
+                    <FadeInImage
+                      uri={item}
+                      style={{
+                        borderRadius: 60,
+                        width: 300,
+                        height: 300,
+                        marginHorizontal: 8,
+                      }}
+                    />
+                  )}
+                />
+              )}
             </Layout>
             {/* formularios */}
 
